@@ -1,0 +1,30 @@
+{% extends "employee/base.html" %}
+{% block title %} Bulk Data Upload - {{ block.super }}{% endblock %}
+{% block add-breadcrumbs %} > Upload Data{% endblock %}
+
+{% block content %}
+    <div id="content-main">
+        <div class="module" id="changelist">
+        <h1>Upload file for bulk loading</h1>
+            {% if messages %}
+                {% for message in messages %}
+                    <div>
+                        <!--                | means OR operator-->
+                        <strong>{{ message|safe }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <h3>{{ upload_message }}</h3>
+            <br>
+            <br>
+            <br>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="file1"> Upload a file</label>
+                <input type="file" id="file1" name="file">
+                <small>Only accepts CSV files</small>
+                <button type="submit">Submit & Process</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

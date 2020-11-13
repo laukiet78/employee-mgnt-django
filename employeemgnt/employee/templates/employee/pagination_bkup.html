@@ -1,0 +1,12 @@
+{% load admin_list %}
+{% load i18n %}
+<p class="paginator">
+{% if paginator.num_pages > 1 %}
+{% for i in paginator.page_range %}
+    {% paginator_number cl i %}
+{% endfor %}
+{% endif %}
+{{ paginator.result_count }} {% if paginator.result_count == 1 %}{{ paginator.opts.verbose_name }}{% else %}{{ paginator.opts.verbose_name_plural }}{% endif %}
+{% if show_all_url %}<a href="{{ show_all_url }}" class="showall">{% translate 'Show all' %}</a>{% endif %}
+{% if paginator.formset and paginator.result_count %}<input type="submit" name="_save" class="default" value="{% translate 'Save' %}">{% endif %}
+</p>

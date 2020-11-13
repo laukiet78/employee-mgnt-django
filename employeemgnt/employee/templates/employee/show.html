@@ -1,0 +1,59 @@
+
+{% extends "employee/base.html" %}
+{% block title %} Viewing all - {{ block.super }}{% endblock %}
+{% block add-breadcrumbs %} > Viewing All{% endblock %}
+
+{% block content %}
+<div id="content-main">
+<div class="module" id="changelist">
+<div class="changelist-form-container">
+    {% if employees.count %}
+<table class="table table-striped table-bordered table-sm">
+    <thead class="thead-dark">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Blood</th>
+        <th>District</th>
+        <th>Contact</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for employee in employees %}
+    <tr>
+
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.get_gender_display }}</td>
+        <td>{{ employee.get_bloodGroup_display }}</td>
+        <td>{{ employee.getEmployeeAddress.district }}</td>
+        <td>{{ employee.contact }}</td>
+        <td>
+            <a class="btn btn-sm btn-info" href="{% url "employee:edit" employee.id %}"><span class="glyphicon glyphicon-pencil" >Edit</span></a>
+            <a class="btn btn-sm btn-danger" href="{% url 'employee:delete' employee.id %}">Delete</a>
+        </td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <div class="">There are no records right now</div>
+{% endif %}
+<br>
+<br>
+    {% block pagination %} {% include "employee/pagination/pagination.html" %} {% endblock %}
+<center><a href="{% url 'employee:add' %}" class="btn btn-primary">Add New Record</a></center>
+<center><a href="{% url 'employee:upload' %}" class="btn btn-secondary">Bulk Load</a></center>
+<center><a href="{% url 'employee:download' 'template' %}" class="btn btn-dark">Download Template</a></center>
+<center><a href="{% url 'employee:download' %}" class="btn btn-dark">Download Data</a></center>
+</div>
+{% block filters %}
+    {#{% include 'employee/filter/filter.html' %}#}
+{% endblock %}
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "employee/base.html" %}
+
+{% block title %} Edit {{ employeeInfo.name }} - {{ block.super }}{% endblock %}
+{% block add-breadcrumbs %} > <a href="{% url 'employee:add' %}">{{ 'Add New' }}</a> > Edit
+    {{ employeeInfo.name }}{% endblock %}
+
+{% block content %}
+    <div id="content-main">
+        <div class="module" id="changelist">
+            <form method="POST" class="post-form" action="{% url 'employee:update' employeeInfo.id %}">
+                {% csrf_token %}
+                <h2>Employee General Information</h2>
+                    <table>
+                        {{ info_form.as_table }}
+                    </table>
+                    <h2>Employee Address Information</h2>
+                    <table>
+                        {{ address_form.as_table }}
+                    </table>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+# install python
+# browse and install the latest version from https://www.python.org/downloads/
+
+# install django
+pip install Django
+
+# PIP is automatically installed with Python 2.7.9+ and Python 3.4+.
+# if you have not PIP installed, download PIP from here, "https://bootstrap.pypa.io/get-pip.py"
+# and go to that file location and use "python get-pip.py"
+
+# install postgresql and its
+# down and install from here https://www.postgresql.org/download/
+
+# install PostGreSQL adapter for python
+pip install psycopg2

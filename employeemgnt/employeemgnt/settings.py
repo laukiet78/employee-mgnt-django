@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import path, include
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,24 +21,35 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+#SECRET_KEY = '4+*=bn%p$fh2eib!#0h8_yke=oxv3u&kzxc$1k0zs0^!#7*tyl'
 SECRET_KEY = '4+*=bn%p$fh2eib!#0h8_yke=oxv3u&kzxc$1k0zs0^!#7*tyl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+#ALLOWED_HOSTS = ['127.0.0.1']
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # added for admin theme
+    'admin_interface',
+    'colorfield',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #my app
+    'employee',
+    'import_export'
 ]
+
+X_FRAME_OPTIONS='SAMEORIGIN'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,14 +59,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'employee.middleware.AuthMiddleware',
 ]
+
 
 ROOT_URLCONF = 'employeemgnt.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,8 +89,12 @@ WSGI_APPLICATION = 'employeemgnt.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'employee',
+        'USER': 'postgres',
+        'PASSWORD': '1245678',
+        'host': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -118,3 +136,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+AUTH_URLS = (
+    r'/$',
+    r'/employee(.*)$',
+)
+NO_AUTH_URLS = (
+    r'/admin(.*)$',
+)
+#customized variables
+LOGIN_URL = '/admin/login'
+
+# ADMIN_SHORTCUTS_SETTINGS = {
+#     'show_on_all_pages': True,
+# }
